@@ -1,0 +1,132 @@
+Test suit: Design test cases for a storage array.
+**********************************************************************************************
+
+TestCase #1. Create one or multiple LUN’s.
+Objectives: Verify user can create one or multiple LUNs successfully
+
+Steps:
+1. Create a LUN on a storage array with lunId and suitable lunSize
+2. Create a LUN with same lunId as step1 on a storage array 
+3. Create a LUN with different lunId as step1, but with larger lunSize than storage available 
+   space
+4. Create multiple LUNs on a storage array with different lunId and suitable lunSize
+5. Create multiple LUNs on a storage array with same lunId and oversized lunSize
+
+Expected result:
+1. In step1 and step4, lun can be created successfully.
+2. In step2,3,5, lun can not be created successfully.
+
+**********************************************************************************************
+TestCase #2. Resize (expand) a LUN.
+Objectives: Verify user can resize or expend LUN size successfully
+
+Steps:
+1. Select a existed lun on a storage array, resize the lun with valid size less than original 
+   size
+2. Select a existed lun on a storage array, resize the lun with valid size more than original 
+   size
+3. Select a non_existed lun on a storage array, to do resize operation
+4. Select a existed lun on a storage array, do many resize operations
+5. Select a existed lun on a storage array, expand the lun with oversized value
+
+Expected result:
+1. In step1, step2 and step4, lun can be resized successfully.
+2. In step3, check the error message.
+3. In step5, the lun can not be resized successfully.
+
+**********************************************************************************************
+TestCase #3. Export a LUN to a host.
+Objectives: Verify user can export a LUN successfully
+
+Steps:
+1. Create a lun on a storage array, after created successfully, export it to a valid host
+2. Select a existed lun on a storage array, export it to a invalid host
+3. Select a existed lun with exported state, export it to a valid host
+4. Select many existed luns on a storage array, export them to same host 
+5. Select many existed luns on a storage array, export them to different host 
+6. Select a existed lun with un-exported state, export it to a valid host
+
+Expected result:
+1. In step1, step4-step6, lun can be exported successfully.
+2. In step2 and step3, the lun can not be exported successfully, and check the error message.
+
+**********************************************************************************************
+TestCase #4. Un-export a LUN.
+Objectives: Verify user can un-export a LUN successfully
+
+Steps:
+1. Create a lun on a storage array, after created successfully, export it to a valid host, 
+   then un-export it.
+2. Select a existed lun on a storage array with un-exported state, un-export it to a host
+3. Select many existed luns with exported state, un-export them
+
+Expected result:
+1. In step1 and step3, lun can be un-exported successfully.
+2. In step2, the lun can not be un-exported successfully, and check the error message.
+
+**********************************************************************************************
+TestCase #5. Remove an un-exported LUN.
+Objectives: Verify user can delete an un-exported LUN successfully
+
+Steps:
+1. Create a lun on a storage array, after created successfully, delete it.
+2. Create a lun on a storage array, after created successfully, export it to a valid host, 
+   then delete it.
+3. Select many existed luns with exported state, delete them
+4. Select many existed luns with un-exported state, delete them
+
+Expected result:
+1. In step1 and step4, lun can be delete successfully.
+2. In step2 and step3, the lun can not be deleted successfully, and check the error message.
+
+**********************************************************************************************
+TestCase #6. Retrieve the information (size, export) of a LUN.
+Objectives: Verify user can retrieve information of LUN successfully
+
+Steps:
+1. Create a lun on a storage array, after created successfully, retrieve the lun info, including
+   id, size and export state.
+2. Create a lun on a storage array, after created successfully, export it to a valid host, then 
+   retrieve the lun info, including id, size and export state.
+3. Create a lun on a storage array, export it to a valid host, then un-export it, retrieve the 
+   lun info, including id, size and export state. 
+
+Expected result:
+1. In step1-step3, user can retrieve the information (size, export) of a LUN successfully.
+
+**********************************************************************************************
+TestCase #7. Concurrent request for a storage array
+Objectives: Verify storage array whether support concurrent request
+
+Steps:
+1. On a storage array, select a existed lun called 'lun1', at the same time, userA to remove it, 
+   but userB to export it to a host.
+2. On a storage array, select a existed lun called 'lun1', at the same time, userA to expand it, 
+   but userB to delete it.
+3. On a storage array, userA to create a lun called 'lun1', at the same time, userB also create 
+   a lun called 'lun1'.
+4. On a storage array, userA to expand a lun called 'lun1' up to the rest space, at the same time, 
+   userB also expand 'lun2' up to the rest space of same storage array.
+5. On a storage array, select a existed lun called 'lun1', at the same time, userA to export it
+   to hostA, but userB export it to hostB.
+
+Expected result:
+1. The steps above, cannot be executed successfully, check the error message.
+
+**********************************************************************************************
+TestCase #7. Performance Test
+Objectives: Verify storage array's performance
+
+Steps:
+1. Create 1000 luns on a storage array, after created successfully, retrieve the lun info, including
+   id, size and export state.
+2. Delete 1000 un-exported luns on a storage array.
+3. Resize (expand) 1000 luns on a storage array.
+4. Export 1000 luns to one same host.
+5. Export 1000 luns to 1000 different hosts.
+6. Un-export 1000 exported luns.
+
+Expected result:
+1. The steps above, can be executed successfully, no any error message.
+
+
